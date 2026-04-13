@@ -95,10 +95,6 @@ Dependiendo de tu configuración:
 ```
 ---
 
-## Acceso
-
-Una vez levantado el backend:
-
 ## Documentación de la API
 
 La API cuenta con documentación interactiva mediante Swagger UI, donde puedes explorar y probar los endpoints.

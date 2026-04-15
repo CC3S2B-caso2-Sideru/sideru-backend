@@ -1,5 +1,6 @@
 package com.sideru.sideru_backend.producto;
 
+import com.sideru.sideru_backend.producto.dto.ProductoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +26,7 @@ public class ProductoController {
             summary = "Consulta la lista de todos los productos"
     )
     @GetMapping
-    public List<Producto> productos() {
+    public List<ProductoResponse> productos() {
         return productoService.findAll();
     }
 }

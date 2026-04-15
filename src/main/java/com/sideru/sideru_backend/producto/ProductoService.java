@@ -1,5 +1,6 @@
 package com.sideru.sideru_backend.producto;
 
+import com.sideru.sideru_backend.producto.dto.ProductoResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,11 @@ public class ProductoService {
         this.productoMapper = productoMapper;
     }
 
-    public List<Producto> findAll() {
-        return productoRepository.findAll();
+    public List<ProductoResponse> findAll() {
+        return productoRepository.findAll()
+                .stream()
+                .map(
+                        producto -> productoMapper.toProductoResponse(producto)
+                ).toList();
     }
 }

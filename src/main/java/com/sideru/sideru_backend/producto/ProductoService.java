@@ -25,4 +25,20 @@ public class ProductoService {
                         producto -> productoMapper.toProductoResponse(producto)
                 ).toList();
     }
+
+    public List<ProductoResponse> findByCategoriaId(Integer categoriaId) {
+        return productoRepository.findAllByCategoriaId(categoriaId)
+                .stream()
+                .map(
+                        producto -> productoMapper.toProductoResponse(producto)
+                ).toList();
+    }
+
+    public List<ProductoResponse> findByCategoriaNombre(String categoriaNombre) {
+        return productoRepository.findAllByCategoriaNombre(categoriaNombre)
+                .stream()
+                .map(
+                        producto -> productoMapper.toProductoResponse(producto)
+                ).toList();
+    }
 }

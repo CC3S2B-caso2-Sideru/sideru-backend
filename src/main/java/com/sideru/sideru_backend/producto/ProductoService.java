@@ -41,4 +41,11 @@ public class ProductoService {
                         producto -> productoMapper.toProductoResponse(producto)
                 ).toList();
     }
+
+    public List<ProductoResponse> search(String term) {
+        return productoRepository.searchByTerm(term)
+                .stream()
+                .map(productoMapper::toProductoResponse)
+                .toList();
+    }
 }

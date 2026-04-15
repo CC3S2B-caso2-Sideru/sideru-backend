@@ -24,24 +24,28 @@ public class ProductoController {
     }
 
     @Operation(
-            summary = "Consulta los productos Sideru con filtros",
+            summary = "Consulta de productos con filtros exclusivos",
             description = """
-        Retorna un listado de productos con soporte para filtrado opcional por categoría.
+        Retorna un listado de productos basado en un único criterio de búsqueda. 
         
-        **Lógica de filtrado:** 
-        * Si se proporciona `categoriaId`, se filtrará exclusivamente por el ID.
-        * Si no hay ID pero se proporciona `categoriaNombre`, se filtrará por el nombre de la categoría.
-        * Si no se envía ningún parámetro, se retornará la lista completa de productos.
-        
-        *Nota: El parámetro `categoriaId` tiene prioridad sobre `categoriaNombre`.*
+        **Orden de prioridad (solo se aplicará el primer parámetro encontrado):**
+        1. `search`: Realiza una búsqueda global por coincidencia parcial en **nombre, SKU o categoría**.
+        2. `categoriaId`: Si no hay 'search', filtra por el ID exacto de la categoría.
+        3. `categoriaNombre`: Si los anteriores son nulos, filtra por el nombre exacto de la categoría.
+        4. **Sin parámetros**: Si no se recibe ninguno, retorna todos los productos.
+
+        *Nota: Estos filtros no son combinables; el sistema ignora los parámetros de menor prioridad.*
         """
     )
     @GetMapping
     public List<ProductoResponse> filterProductos(
+        @RequestParam(required = false) String search,
         @RequestParam(required = false) Integer categoriaId,
         @RequestParam(required = false) String categoriaNombre
     ) {
-        if (categoriaId != null)
+        if (search != null)
+            return productoService.search(search);
+        else if (categoriaId != null)
             return productoService.findByCategoriaId(categoriaId);
         else if (categoriaNombre != null)
             return productoService.findByCategoriaNombre(categoriaNombre);

@@ -42,8 +42,8 @@ public class ProductoService {
                 ).toList();
     }
 
-    public List<ProductoResponse> search(String term) {
-        return productoRepository.searchByTerm(term)
+    public List<ProductoResponse> findByFilters(Integer categoriaId, String search) {
+        return productoRepository.findByFilters(categoriaId, search)
                 .stream()
                 .map(productoMapper::toProductoResponse)
                 .toList();

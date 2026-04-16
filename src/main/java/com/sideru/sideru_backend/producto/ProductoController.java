@@ -28,10 +28,9 @@ public class ProductoController {
             description = """
         Retorna un listado de productos basado en un único criterio de búsqueda. 
         
-        **Orden de prioridad (solo se aplicará el primer parámetro encontrado):**
-        1. `search`: Realiza una búsqueda global por coincidencia parcial en **nombre, SKU o categoría**.
-        2. `categoriaId`: Si no hay 'search', filtra por el ID exacto de la categoría.
-        3. `categoriaNombre`: Si los anteriores son nulos, filtra por el nombre exacto de la categoría.
+        **Orden de prioridad (solo se aplicará el primer parámetro encontrado):**\n
+        1. `search`: Realiza una búsqueda global por coincidencia parcial en **nombre, SKU o categoría**.\n
+        2. `categoriaId`: Si no hay 'search', filtra por el ID exacto de la categoría.\n
         4. **Sin parámetros**: Si no se recibe ninguno, retorna todos los productos.
 
         *Nota: Estos filtros no son combinables; el sistema ignora los parámetros de menor prioridad.*
@@ -40,16 +39,13 @@ public class ProductoController {
     @GetMapping
     public List<ProductoResponse> filterProductos(
         @RequestParam(required = false) String search,
-        @RequestParam(required = false) Integer categoriaId,
-        @RequestParam(required = false) String categoriaNombre
+        @RequestParam(name = "categoria-id", required = false) Integer categoriaId
     ) {
-        if (search != null)
-            return productoService.search(search);
-        else if (categoriaId != null)
-            return productoService.findByCategoriaId(categoriaId);
-        else if (categoriaNombre != null)
-            return productoService.findByCategoriaNombre(categoriaNombre);
-        else
-            return productoService.findAll();
+//        try {
+//            Thread.sleep(2000);
+//        }  catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        return productoService.findByFilters(categoriaId, search);
     }
 }

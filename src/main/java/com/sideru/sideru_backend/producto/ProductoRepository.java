@@ -8,13 +8,20 @@ import java.util.List;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     List<Producto> findAllByCategoriaId(Integer categoriaId);
+
     List<Producto> findAllByCategoriaNombre(String nombre);
 
     @Query("""
-           SELECT p FROM Producto p 
-           WHERE LOWER(p.nombre) LIKE LOWER(CONCAT('%', :term, '%')) 
-              OR LOWER(p.sku) LIKE LOWER(CONCAT('%', :term, '%')) 
-              OR LOWER(p.categoria.nombre) LIKE LOWER(CONCAT('%', :term, '%'))
-           """)
-    List<Producto> searchByTerm(@Param("term") String term);
+            SELECT p FROM Producto p
+            JOIN p.categoria c
+            WHERE (:categoriaId IS NULL OR p.categoria.id = :categoriaId)
+            AND (
+                :search IS NULL OR (
+                    LOWER(p.nombre) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%'))
+                    OR LOWER(p.sku) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%'))
+                    OR LOWER(c.nombre) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%'))
+                )
+            )
+            """)
+    List<Producto> findByFilters(Integer categoriaId, String search);
 }

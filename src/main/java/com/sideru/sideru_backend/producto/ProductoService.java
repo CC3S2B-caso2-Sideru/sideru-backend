@@ -42,8 +42,11 @@ public class ProductoService {
                 ).toList();
     }
 
-    public List<ProductoResponse> findByFilters(Integer categoriaId, String search) {
-        return productoRepository.findByFilters(categoriaId, search)
+    public List<ProductoResponse> findByFilters(Integer categoriaId, String search, Long page, Integer pageSize) {
+        Long limit = pageSize.longValue();
+        Long offset =  (page - 1) * limit;
+
+        return productoRepository.findByFilters(categoriaId, search, limit, offset)
                 .stream()
                 .map(productoMapper::toProductoResponse)
                 .toList();

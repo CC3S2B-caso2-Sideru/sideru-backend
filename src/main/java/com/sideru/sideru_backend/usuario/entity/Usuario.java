@@ -1,40 +1,31 @@
-package com.sideru.sideru_backend.usuario;
+package com.sideru.sideru_backend.usuario.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 
-//id            SERIAL PRIMARY KEY,
-//rol_id        INT          NOT NULL,
-//tipo          tipo_usuario NOT NULL,
-//username      VARCHAR(60)  NOT NULL UNIQUE,
-//email         VARCHAR(150) NOT NULL UNIQUE,
-//password_hash TEXT         NOT NULL,
-//activo        BOOLEAN               DEFAULT TRUE,
-//ultimo_login  TIMESTAMPTZ,
-//    -- auditoría
-//created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
-//updated_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
-//
-//FOREIGN KEY (rol_id) REFERENCES rol (id)
 @Entity
 @Table(name = "usuario")
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    // Si es ENUM: @Enumerated(EnumType.STRING) @Column(nullable = false)
-    @Column(name = "tipo", nullable = false)
-    private String tipoUsuario;
+    @Enumerated(EnumType.STRING)
+    private TipoUsuario tipo;
 
     @Column(name = "username", nullable = false, length = 60, unique = true)
     private String username;
@@ -53,7 +44,7 @@ public class Usuario {
     private Instant ultimoLogin;
 
     // Relación con tabla rol
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rol_id", nullable = false)
     private Rol rol;
 

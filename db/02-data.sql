@@ -128,20 +128,20 @@ WHERE codigo IN (
 --  USUARIOS INTERNOS
 
 INSERT INTO usuario (rol_id, tipo, username, email, password_hash) VALUES
-                                                                       (1, 'interno', 'admin.torres',    'admin@siderurgicaperu.com',     '$2b$12$HASH_ADMIN_001'),
-                                                                       (2, 'interno', 'gerente.vargas',  'gerente@siderurgicaperu.com',   '$2b$12$HASH_GERE_001'),
-                                                                       (3, 'interno', 'vendedor.luna',   'vluna@siderurgicaperu.com',     '$2b$12$HASH_VEND_001'),
-                                                                       (3, 'interno', 'vendedor.rios',   'vrios@siderurgicaperu.com',     '$2b$12$HASH_VEND_002'),
-                                                                       (4, 'interno', 'almacen.huanca',  'ahuanca@siderurgicaperu.com',   '$2b$12$HASH_ALMA_001'),
-                                                                       (5, 'interno', 'rrhh.mendoza',    'rmendoza@siderurgicaperu.com',  '$2b$12$HASH_RRHH_001');
+                                                                       (1, 'INTERNO', 'admin.torres',    'admin@siderurgicaperu.com',     '$2b$12$HASH_ADMIN_001'),
+                                                                       (2, 'INTERNO', 'gerente.vargas',  'gerente@siderurgicaperu.com',   '$2b$12$HASH_GERE_001'),
+                                                                       (3, 'INTERNO', 'vendedor.luna',   'vluna@siderurgicaperu.com',     '$2b$12$HASH_VEND_001'),
+                                                                       (3, 'INTERNO', 'vendedor.rios',   'vrios@siderurgicaperu.com',     '$2b$12$HASH_VEND_002'),
+                                                                       (4, 'INTERNO', 'almacen.huanca',  'ahuanca@siderurgicaperu.com',   '$2b$12$HASH_ALMA_001'),
+                                                                       (5, 'INTERNO', 'rrhh.mendoza',    'rmendoza@siderurgicaperu.com',  '$2b$12$HASH_RRHH_001');
 
 -- USUARIOS CLIENTES (portal)
 INSERT INTO usuario (rol_id, tipo, username, email, password_hash) VALUES
-                                                                       (6, 'cliente', 'cliente.acero_sur',     'compras@acerosur.com.pe',      '$2b$12$HASH_CLI_001'),
-                                                                       (6, 'cliente', 'cliente.construcciones','admin@construccionesrm.pe',     '$2b$12$HASH_CLI_002'),
-                                                                       (6, 'cliente', 'cliente.silva',         'jsilva@gmail.com',             '$2b$12$HASH_CLI_003'),
-                                                                       (6, 'cliente', 'cliente.ferreteria_jm', 'fjm@ferreteriajesusm.pe',      '$2b$12$HASH_CLI_004'),
-                                                                       (6, 'cliente', 'cliente.palacios',      'rpalacios@outlook.com',        '$2b$12$HASH_CLI_005');
+                                                                       (6, 'CLIENTE', 'cliente.acero_sur',     'compras@acerosur.com.pe',      '$2b$12$HASH_CLI_001'),
+                                                                       (6, 'CLIENTE', 'cliente.construcciones','admin@construccionesrm.pe',     '$2b$12$HASH_CLI_002'),
+                                                                       (6, 'CLIENTE', 'cliente.silva',         'jsilva@gmail.com',             '$2b$12$HASH_CLI_003'),
+                                                                       (6, 'CLIENTE', 'cliente.ferreteria_jm', 'fjm@ferreteriajesusm.pe',      '$2b$12$HASH_CLI_004'),
+                                                                       (6, 'CLIENTE', 'cliente.palacios',      'rpalacios@outlook.com',        '$2b$12$HASH_CLI_005');
 
 --  CLIENTES
 

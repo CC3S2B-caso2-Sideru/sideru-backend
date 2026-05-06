@@ -16,6 +16,7 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,17 +47,6 @@ public class Producto {
     @Column(name = "activo")
     private Boolean activo;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    @JsonBackReference
-    private Categoria categoria;
-}
-@Getter
-@Setter
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-public abstract class AuditableEntity<IdType extends  Number> extends BaseEntity<IdType> {
-
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
@@ -64,4 +54,9 @@ public abstract class AuditableEntity<IdType extends  Number> extends BaseEntity
     @LastModifiedDate
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    @JsonBackReference
+    private Categoria categoria;
 }

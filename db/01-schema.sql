@@ -68,7 +68,7 @@ CREATE TABLE rol_permiso
     FOREIGN KEY (permiso_id) REFERENCES permiso (id)
 );
 
-CREATE TYPE tipo_usuario AS ENUM ('interno', 'cliente');
+CREATE TYPE tipo_usuario AS ENUM ('INTERNO', 'CLIENTE');
 
 CREATE TABLE usuario
 (

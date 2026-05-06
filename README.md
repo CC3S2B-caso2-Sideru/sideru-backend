@@ -23,6 +23,7 @@ DB_NAME=<database_name>
 DB_URL=jdbc:postgresql://localhost:5432/<database_name>
 DB_USER=<database_user>
 DB_PASSWORD=<database_password>
+JWT_KEY=<secret_key>
 ```
 
 **Ejemplo:**
@@ -32,6 +33,7 @@ DB_NAME=sideru_db
 DB_URL=jdbc:postgresql://localhost:5432/sideru_db
 DB_USER=user
 DB_PASSWORD=pass
+JWT_KEY=VLUGN6oRncJXLGzqfO7QvbdHgNcjig65dZ87TFuvhQC # <- Se usó esta llave para los datos de prueba. Usar para demo
 ```
 
 ---

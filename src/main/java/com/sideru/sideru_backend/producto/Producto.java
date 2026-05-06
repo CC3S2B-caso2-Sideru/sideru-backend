@@ -3,11 +3,13 @@ package com.sideru.sideru_backend.producto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sideru.sideru_backend.categoria.Categoria;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Entity
 @Table(name = "producto")
@@ -48,4 +50,18 @@ public class Producto {
     @JoinColumn(name = "categoria_id")
     @JsonBackReference
     private Categoria categoria;
+}
+@Getter
+@Setter
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class AuditableEntity<IdType extends  Number> extends BaseEntity<IdType> {
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 }

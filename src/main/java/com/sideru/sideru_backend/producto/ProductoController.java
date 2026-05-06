@@ -47,8 +47,8 @@ public class ProductoController {
             @Min(1)
             Long page,
         @RequestParam(name = "n", required = false, defaultValue = "18")
-//            @Min(12)
-            @Min(1)
+//            @Min(1)
+            @Min(12)
             @Max(72)
             Integer pageSize
     ) {

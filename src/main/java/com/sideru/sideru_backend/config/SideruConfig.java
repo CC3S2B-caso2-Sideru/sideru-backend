@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
 @EnableJpaAuditing
+@EnableConfigurationProperties(JwtProperties.class)
 public class SideruConfig {
 }

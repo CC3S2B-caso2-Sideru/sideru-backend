@@ -24,6 +24,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "tipo")
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipo;
 

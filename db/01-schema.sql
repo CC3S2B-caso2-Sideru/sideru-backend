@@ -68,13 +68,11 @@ CREATE TABLE rol_permiso
     FOREIGN KEY (permiso_id) REFERENCES permiso (id)
 );
 
-CREATE TYPE tipo_usuario AS ENUM ('INTERNO', 'CLIENTE');
-
 CREATE TABLE usuario
 (
     id            SERIAL PRIMARY KEY,
     rol_id        INT          NOT NULL,
-    tipo          tipo_usuario NOT NULL,
+    tipo          VARCHAR NOT NULL CHECK (tipo IN ('CLIENTE', 'INTERNO')),
     username      VARCHAR(60)  NOT NULL UNIQUE,
     email         VARCHAR(150) NOT NULL UNIQUE,
     password_hash TEXT         NOT NULL,
@@ -93,7 +91,7 @@ CREATE TABLE usuario
 CREATE TABLE cliente
 (
     id             SERIAL PRIMARY KEY,
-    usuario_id     INT          NOT NULL UNIQUE,
+    usuario_id     INT NOT NULL UNIQUE,
     ruc            VARCHAR(11) UNIQUE,
     dni            VARCHAR(8) UNIQUE,
     razon_social   VARCHAR(200),
@@ -101,7 +99,6 @@ CREATE TABLE cliente
     apellido       VARCHAR(100),
     telefono       VARCHAR(20),
     direccion      TEXT,
-    fecha_registro TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     activo         BOOLEAN               DEFAULT TRUE,
     -- auditoría
     created_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW(),

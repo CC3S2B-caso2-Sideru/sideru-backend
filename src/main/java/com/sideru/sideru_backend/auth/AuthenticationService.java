@@ -6,6 +6,9 @@ import com.sideru.sideru_backend.auth.dto.RegisterRequest;
 import com.sideru.sideru_backend.cliente.Cliente;
 import com.sideru.sideru_backend.cliente.ClienteRepository;
 import com.sideru.sideru_backend.cliente.dto.ClienteCreate;
+import com.sideru.sideru_backend.exception.DuplicateResourceException;
+import com.sideru.sideru_backend.exception.ResourceNotFoundException;
+import com.sideru.sideru_backend.exception.ValidationException;
 import com.sideru.sideru_backend.security.UsuarioDetailsService;
 import com.sideru.sideru_backend.security.jwt.JwtService;
 import com.sideru.sideru_backend.usuario.RolRepository;
@@ -41,12 +44,12 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest registerRequest) {
         // Verificar que el usuario no exista
         if (usuarioRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("El usuario ya existe");
+            throw new DuplicateResourceException("Usuario","username",registerRequest.getUsername());
         }
 
         // Obtener el rol por defecto "cliente"
         Rol rolCliente = rolRepository.findByNombre("cliente")
-                .orElseThrow(() -> new RuntimeException("Rol cliente no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Rol", "cliente"));
 
         // Crear usuario
         Usuario usuario = Usuario.builder()
@@ -100,7 +103,7 @@ public class AuthenticationService {
                     )
             );
         } catch (Exception e) {
-            throw new IllegalArgumentException("Usuario o contraseña inválidos");
+            throw new ValidationException("Credenciales no válidas");
         }
 
         // Obtener usuario

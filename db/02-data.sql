@@ -139,7 +139,7 @@ INSERT INTO usuario (rol_id, tipo, username, email, password_hash) VALUES
 INSERT INTO usuario (rol_id, tipo, username, email, password_hash) VALUES
                                                                        (6, 'CLIENTE', 'acero_sur',     'compras@acerosur.com.pe',      '$2a$10$GB4LsBTGQo4dVC4lNUNWVePNFcTSsB9H9S.CvJAKq3b.9wtzk6Sri'), -- pwd: acero
                                                                        (6, 'CLIENTE', 'construcciones','admin@construccionesrm.pe',     '$2a$10$12YBoiOhIR8nYztvzqs8ge/M633ScKF6Ron2uwelxdrBYbINt.8sW'), -- pwd: construcciones
-                                                                       (6, 'CLIENTE', 'silva',         'jsilva@gmail.com',             '$2a$10$mxBQoHYDxxp1HOx2AgdOs.lh2nVKSHCRVbqA7IwT9WMOEC7Il0.ou'), -- pwd: silve
+                                                                       (6, 'CLIENTE', 'silva',         'jsilva@gmail.com',             '$2a$10$mxBQoHYDxxp1HOx2AgdOs.lh2nVKSHCRVbqA7IwT9WMOEC7Il0.ou'), -- pwd: silva
                                                                        (6, 'CLIENTE', 'ferreteria_jm', 'fjm@ferreteriajesusm.pe',      '$2a$10$XBWyCZ17sd7HpjBWP/dakuGGANEudLmfrY7kT/IeAwS0sR47fXjNG'), -- pwd: ferreteria
                                                                        (6, 'CLIENTE', 'palacios',      'rpalacios@outlook.com',        '$2a$10$TLoldUQeHjEOCIgvjUpA8.3J41G5if5yEy/zCQvyYHYjpCsXgf.Ja'); -- pwd: palacios
 

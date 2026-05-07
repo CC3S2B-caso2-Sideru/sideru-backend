@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,15 +27,18 @@ public class ProductoController {
         this.productoService = productoService;
     }
 
-    @Operation(
+@Operation(
             summary = "Consulta de productos con filtros",
             description = """
         Retorna un listado de productos aplicando filtros. 
         
         **Orden de prioridad (solo se aplicará el primer parámetro encontrado):**\n
-        1. `search`: Realiza una búsqueda global por coincidencia parcial en **nombre, SKU o nombre de su categoría**.\n
-        2. `categoria`: filtra por categoria usando su Id.\n
-        3. `page`: Indica la página de productos a mostrar. Se hace un offset de `n*(page-1)` productos.\n
+        1. `search`: Realiza una búsqueda global por coincidencia parcial en **nombre, SKU o nombre de su categoría**.
+
+        2. `categoria`: filtra por categoria usando su Id.
+
+        3. `page`: Indica la página de productos a mostrar. Se hace un offset de `n*(page-1)` productos.
+
         4. `n`: Indica la cantidad de productos a mostrar.
         """
     )

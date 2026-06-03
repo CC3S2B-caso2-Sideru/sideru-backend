@@ -17,7 +17,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('admin.usuarios.gestionar')")
+    @PreAuthorize("hasAuthority('usuario.gestionar')")
     public List<UsuarioResponse> getUsuarios() {
         return usuarioService.getUsuarios();
     }

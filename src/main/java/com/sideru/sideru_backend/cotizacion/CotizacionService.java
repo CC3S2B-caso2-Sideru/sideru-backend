@@ -6,7 +6,7 @@ import com.sideru.sideru_backend.cotizacion.dto.*;
 import com.sideru.sideru_backend.cotizacion.entity.Cotizacion;
 import com.sideru.sideru_backend.cotizacion.entity.CotizacionDetalle;
 import com.sideru.sideru_backend.cotizacion.entity.EstadoCotizacion;
-import com.sideru.sideru_backend.cotizacion.repository.CotizacionRepository;
+import com.sideru.sideru_backend.cotizacion.CotizacionRepository;
 import com.sideru.sideru_backend.exception.ResourceNotFoundException;
 import com.sideru.sideru_backend.producto.Producto;
 import com.sideru.sideru_backend.producto.ProductoRepository;
@@ -43,7 +43,6 @@ public class CotizacionService {
                 .fechaExpiracion(LocalDate.now().plusDays(7)) // Expira en 7 días
                 .estado(EstadoCotizacion.enviada) // Estado inicial enviado al vendedor
                 .observaciones(request.observaciones())
-                .descuentoTotal(BigDecimal.ZERO)
                 .build();
 
         List<CotizacionDetalle> detalles = new ArrayList<>();
@@ -65,17 +64,16 @@ public class CotizacionService {
                     .producto(producto)
                     .cantidad(itemReq.cantidad())
                     .precioUnitario(precio)
-                    .descuento(BigDecimal.ZERO)
                     .subtotal(itemSubtotal)
                     .build();
 
             detalles.add(detalle);
         }
 
-        // IGV: Subtotal = Total/1.18.
-        BigDecimal total = subtotalAcumulado;
-        BigDecimal subtotal = total.divide(BigDecimal.valueOf(1.18), 2, RoundingMode.HALF_UP);
-        BigDecimal igv = total.subtract(subtotal);
+        // IGV: 18% sobre la base imponible (subtotal). Total = subtotal + IGV.
+        BigDecimal subtotal = subtotalAcumulado;
+        BigDecimal igv = subtotal.multiply(BigDecimal.valueOf(0.18)).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal total = subtotal.add(igv);
 
         cotizacion.setSubtotal(subtotal);
         cotizacion.setIgv(igv);

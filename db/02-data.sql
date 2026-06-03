@@ -61,26 +61,26 @@ INSERT INTO rol (nombre, descripcion) VALUES
                                           ('cliente',    'Cliente del portal web');
 
 INSERT INTO permiso (codigo, modulo, accion, descripcion) VALUES
-                                                              ('ventas.cotizacion.ver',      'ventas',    'ver',      'Ver listado y detalle de cotizaciones'),
-                                                              ('ventas.cotizacion.crear',    'ventas',    'crear',    'Crear nuevas cotizaciones'),
-                                                              ('ventas.cotizacion.editar',   'ventas',    'editar',   'Editar cotizaciones existentes'),
-                                                              ('ventas.cotizacion.aprobar',  'ventas',    'aprobar',  'Aprobar o rechazar cotizaciones'),
-                                                              ('ventas.pedido.ver',          'ventas',    'ver',      'Ver pedidos'),
-                                                              ('ventas.pedido.crear',        'ventas',    'crear',    'Registrar pedidos'),
-                                                              ('ventas.pedido.editar',       'ventas',    'editar',   'Actualizar estado de pedidos'),
-                                                              ('ventas.comprobante.crear',   'ventas',    'crear',    'Emitir facturas y boletas'),
-                                                              ('logistica.stock.ver',        'logistica', 'ver',      'Consultar stock de productos'),
-                                                              ('logistica.stock.editar',     'logistica', 'editar',   'Ajustar stock manualmente'),
-                                                              ('logistica.orden_compra.ver', 'logistica', 'ver',      'Ver órdenes de compra'),
-                                                              ('logistica.orden_compra.crear','logistica','crear',    'Crear órdenes de compra'),
-                                                              ('logistica.recepcion.crear',  'logistica', 'crear',    'Registrar recepciones de mercadería'),
-                                                              ('rrhh.empleado.ver',          'rrhh',      'ver',      'Ver empleados'),
-                                                              ('rrhh.empleado.crear',        'rrhh',      'crear',    'Registrar nuevos empleados'),
-                                                              ('rrhh.asistencia.ver',        'rrhh',      'ver',      'Ver registros de asistencia'),
-                                                              ('rrhh.planilla.ver',          'rrhh',      'ver',      'Ver planillas'),
-                                                              ('rrhh.planilla.procesar',     'rrhh',      'aprobar',  'Procesar planilla mensual'),
-                                                              ('reportes.ver',               'reportes',  'ver',      'Acceder a reportes gerenciales'),
-                                                              ('admin.usuarios.gestionar',   'admin',     'editar',   'Gestionar usuarios y roles');
+                                                              ('cotizacion.ver',       'ventas',    'ver',      'Ver listado y detalle de cotizaciones'),
+                                                              ('cotizacion.crear',     'ventas',    'crear',    'Crear nuevas cotizaciones'),
+                                                              ('cotizacion.editar',    'ventas',    'editar',   'Editar cotizaciones existentes'),
+                                                              ('cotizacion.aprobar',   'ventas',    'aprobar',  'Aprobar o rechazar cotizaciones'),
+                                                              ('pedido.ver',           'ventas',    'ver',      'Ver pedidos'),
+                                                              ('pedido.crear',         'ventas',    'crear',    'Registrar pedidos'),
+                                                              ('pedido.editar',        'ventas',    'editar',   'Actualizar estado de pedidos'),
+                                                              ('comprobante.crear',    'ventas',    'crear',    'Emitir facturas y boletas'),
+                                                              ('stock.ver',            'logistica', 'ver',      'Consultar stock de productos'),
+                                                              ('stock.editar',         'logistica', 'editar',   'Ajustar stock manualmente'),
+                                                              ('orden_compra.ver',     'logistica', 'ver',      'Ver órdenes de compra'),
+                                                              ('orden_compra.crear',   'logistica', 'crear',    'Crear órdenes de compra'),
+                                                              ('recepcion.crear',      'logistica', 'crear',    'Registrar recepciones de mercadería'),
+                                                              ('empleado.ver',         'rrhh',      'ver',      'Ver empleados'),
+                                                              ('empleado.crear',       'rrhh',      'crear',    'Registrar nuevos empleados'),
+                                                              ('asistencia.ver',       'rrhh',      'ver',      'Ver registros de asistencia'),
+                                                              ('planilla.ver',         'rrhh',      'ver',      'Ver planillas'),
+                                                              ('planilla.procesar',    'rrhh',      'aprobar',  'Procesar planilla mensual'),
+                                                              ('reporte.ver',          'reportes',  'ver',      'Acceder a reportes gerenciales'),
+                                                              ('usuario.gestionar',    'admin',     'editar',   'Gestionar usuarios y roles');
 
 -- Permisos por rol
 -- admin: todos
@@ -91,39 +91,44 @@ SELECT 1, id FROM permiso;
 INSERT INTO rol_permiso (rol_id, permiso_id)
 SELECT 2, id FROM permiso
 WHERE codigo IN (
-                 'ventas.cotizacion.ver','ventas.cotizacion.aprobar',
-                 'ventas.pedido.ver','ventas.comprobante.crear',
-                 'logistica.stock.ver','logistica.orden_compra.ver',
-                 'rrhh.empleado.ver','rrhh.planilla.ver','reportes.ver'
+                 'cotizacion.ver','cotizacion.aprobar',
+                 'pedido.ver','comprobante.crear',
+                 'stock.ver','orden_compra.ver',
+                 'empleado.ver','planilla.ver','reporte.ver'
     );
 
 -- vendedor
 INSERT INTO rol_permiso (rol_id, permiso_id)
 SELECT 3, id FROM permiso
 WHERE codigo IN (
-                 'ventas.cotizacion.ver','ventas.cotizacion.crear','ventas.cotizacion.editar',
-                 'ventas.pedido.ver','ventas.pedido.crear','ventas.pedido.editar',
-                 'ventas.comprobante.crear','logistica.stock.ver'
+                 'cotizacion.ver','cotizacion.crear','cotizacion.editar',
+                 'pedido.ver','pedido.crear','pedido.editar',
+                 'comprobante.crear','stock.ver'
     );
 
 -- almacenero
 INSERT INTO rol_permiso (rol_id, permiso_id)
 SELECT 4, id FROM permiso
 WHERE codigo IN (
-                 'logistica.stock.ver','logistica.stock.editar',
-                 'logistica.orden_compra.ver','logistica.orden_compra.crear',
-                 'logistica.recepcion.crear','ventas.pedido.ver','ventas.pedido.editar'
+                 'stock.ver','stock.editar',
+                 'orden_compra.ver','orden_compra.crear',
+                 'recepcion.crear','pedido.ver','pedido.editar'
     );
 
 -- rrhh
 INSERT INTO rol_permiso (rol_id, permiso_id)
 SELECT 5, id FROM permiso
 WHERE codigo IN (
-                 'rrhh.empleado.ver','rrhh.empleado.crear',
-                 'rrhh.asistencia.ver','rrhh.planilla.ver','rrhh.planilla.procesar'
+                 'empleado.ver','empleado.crear',
+                 'asistencia.ver','planilla.ver','planilla.procesar'
     );
 
--- cliente: solo portal (sin permisos de backoffice — manejo por tipo)
+-- cliente: portal — ver y crear sus propias cotizaciones
+INSERT INTO rol_permiso (rol_id, permiso_id)
+SELECT 6, id FROM permiso
+WHERE codigo IN (
+                 'cotizacion.ver','cotizacion.crear'
+    );
 
 --  USUARIOS INTERNOS
 

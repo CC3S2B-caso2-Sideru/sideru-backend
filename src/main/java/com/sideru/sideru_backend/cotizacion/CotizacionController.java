@@ -24,7 +24,7 @@ public class CotizacionController {
     private final CotizacionService cotizacionService;
 
     @PostMapping
-    @PreAuthorize("hasRole('cliente')")
+    @PreAuthorize("hasAuthority('cotizacion.crear')")
     @Operation(summary = "Crear una nueva solicitud de cotización")
     public ResponseEntity<CotizacionResponse> crear(
             @Valid @RequestBody CotizacionRequest request,
@@ -35,7 +35,7 @@ public class CotizacionController {
     }
 
     @GetMapping("/mis-cotizaciones")
-    @PreAuthorize("hasRole('cliente')")
+    @PreAuthorize("hasAuthority('cotizacion.ver')")
     @Operation(summary = "Obtener el historial de cotizaciones del cliente logueado")
     public ResponseEntity<List<CotizacionResponse>> listarMisCotizaciones(
             @AuthenticationPrincipal UsuarioDetails userDetails

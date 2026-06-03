@@ -3,9 +3,12 @@ package com.sideru.sideru_backend.cotizacion.entity;
 import com.sideru.sideru_backend.producto.Producto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "cotizacion_detalle")
@@ -14,6 +17,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class CotizacionDetalle {
 
     @Id
@@ -34,29 +38,18 @@ public class CotizacionDetalle {
     @Column(name = "precio_unitario", nullable = false)
     private BigDecimal precioUnitario;
 
+    @Builder.Default
     @Column(name = "descuento", nullable = false)
-    private BigDecimal descuento;
+    private BigDecimal descuento = BigDecimal.ZERO;
 
     @Column(name = "subtotal", nullable = false)
     private BigDecimal subtotal;
 
+    @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt;
+    private Instant createdAt;
 
+    @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
-    private OffsetDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = OffsetDateTime.now();
-        updatedAt = OffsetDateTime.now();
-        if (descuento == null) {
-            descuento = BigDecimal.ZERO;
-        }
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = OffsetDateTime.now();
-    }
+    private Instant updatedAt;
 }

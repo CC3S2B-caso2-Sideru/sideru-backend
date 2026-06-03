@@ -3,8 +3,14 @@ package com.sideru.sideru_backend.cotizacion.entity;
 import com.sideru.sideru_backend.cliente.Cliente;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -17,6 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Cotizacion {
 
     @Id
@@ -34,6 +41,7 @@ public class Cotizacion {
     private LocalDate fechaExpiracion;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "estado", nullable = false)
     private EstadoCotizacion estado;
 
@@ -43,8 +51,9 @@ public class Cotizacion {
     @Column(name = "subtotal", nullable = false)
     private BigDecimal subtotal;
 
+    @Builder.Default
     @Column(name = "descuento_total", nullable = false)
-    private BigDecimal descuentoTotal;
+    private BigDecimal descuentoTotal = BigDecimal.ZERO;
 
     @Column(name = "igv", nullable = false)
     private BigDecimal igv;
@@ -52,11 +61,13 @@ public class Cotizacion {
     @Column(name = "total", nullable = false)
     private BigDecimal total;
 
+    @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt;
+    private Instant createdAt;
 
+    @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
-    private OffsetDateTime updatedAt;
+    private Instant updatedAt;
 
     @OneToMany(mappedBy = "cotizacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
@@ -64,16 +75,8 @@ public class Cotizacion {
 
     @PrePersist
     protected void onCreate() {
-        createdAt = OffsetDateTime.now();
-        updatedAt = OffsetDateTime.now();
-        fechaEmision = OffsetDateTime.now();
-        if (descuentoTotal == null) {
-            descuentoTotal = BigDecimal.ZERO;
+        if (fechaEmision == null) {
+            fechaEmision = OffsetDateTime.now();
         }
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = OffsetDateTime.now();
     }
 }

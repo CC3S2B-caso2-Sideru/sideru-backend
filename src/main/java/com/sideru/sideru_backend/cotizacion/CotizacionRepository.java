@@ -1,4 +1,5 @@
-package com.sideru.sideru_backend.cotizacion.repository;
+package com.sideru.sideru_backend.cotizacion;
+
 import com.sideru.sideru_backend.cotizacion.entity.Cotizacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;

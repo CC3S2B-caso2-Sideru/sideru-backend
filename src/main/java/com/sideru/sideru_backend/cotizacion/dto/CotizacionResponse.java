@@ -14,5 +14,6 @@ public record CotizacionResponse(
     BigDecimal subtotal,
     BigDecimal igv,
     BigDecimal total,
+    String cliente,
     List<CotizacionDetalleResponse> detalles
 ) {}

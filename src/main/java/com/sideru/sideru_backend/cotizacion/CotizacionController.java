@@ -13,6 +13,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import com.sideru.sideru_backend.exception.ResourceNotFoundException;
+import java.util.Map;
+
 import java.util.List;
 
 @RestController
@@ -42,5 +45,26 @@ public class CotizacionController {
     ) {
         List<CotizacionResponse> response = cotizacionService.listarMisCotizaciones(userDetails.getUsuario());
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/admin/todas")
+    @PreAuthorize("hasAuthority('cotizacion.ver')")
+    @Operation(summary = "Listar todas las cotizaciones (admin/vendedor/gerente)")
+    public ResponseEntity<List<CotizacionResponse>> listarTodas() {
+        return ResponseEntity.ok(cotizacionService.listarTodas());
+    }
+
+    @PatchMapping("/{id}/aceptar")
+    @PreAuthorize("hasAuthority('cotizacion.aprobar')")
+    @Operation(summary = "Aceptar una cotización")
+    public ResponseEntity<CotizacionResponse> aceptar(@PathVariable Integer id) {
+        return ResponseEntity.ok(cotizacionService.aceptarCotizacion(id));
+    }
+
+    @PatchMapping("/{id}/rechazar")
+    @PreAuthorize("hasAuthority('cotizacion.aprobar')")
+    @Operation(summary = "Rechazar una cotización")
+    public ResponseEntity<CotizacionResponse> rechazar(@PathVariable Integer id) {
+        return ResponseEntity.ok(cotizacionService.rechazarCotizacion(id));
     }
 }

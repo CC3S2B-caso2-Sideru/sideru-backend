@@ -35,15 +35,15 @@ public class CotizacionService {
         Cliente cliente = clienteRepository.findByUsuario(usuario)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente", usuario.getId().toString()));
 
-        BigDecimal subtotalAcumulado = BigDecimal.ZERO;
-
-        // Instanciar la cabecera
+        // Instanciar la cabecera (estado se asigna después de verificar stockMinimo)
         Cotizacion cotizacion = Cotizacion.builder()
                 .cliente(cliente)
                 .fechaExpiracion(LocalDate.now().plusDays(7)) // Expira en 7 días
-                .estado(EstadoCotizacion.enviada) // Estado inicial enviado al vendedor
                 .observaciones(request.observaciones())
                 .build();
+
+        BigDecimal subtotalAcumulado = BigDecimal.ZERO;
+        boolean excedeStockMinimo = false;
 
         List<CotizacionDetalle> detalles = new ArrayList<>();
 
@@ -51,6 +51,12 @@ public class CotizacionService {
         for (CotizacionItemRequest itemReq : request.items()) {
             Producto producto = productoRepository.findBySku(itemReq.sku())
                     .orElseThrow(() -> new ResourceNotFoundException("Producto", itemReq.sku()));
+
+            // Verificar si la cantidad excede el stockMinimo del producto
+            Integer minimo = producto.getStockMinimo();
+            if (minimo == null || itemReq.cantidad() > minimo) {
+                excedeStockMinimo = true;
+            }
 
             // Subtotal del item = precio * cantidad
             BigDecimal precio = producto.getPrecio();
@@ -75,6 +81,12 @@ public class CotizacionService {
         BigDecimal igv = subtotal.multiply(BigDecimal.valueOf(0.18)).setScale(2, RoundingMode.HALF_UP);
         BigDecimal total = subtotal.add(igv);
 
+        // Si ningún item excede stockMinimo → aceptada automáticamente
+        // Si algún item excede → enviada (pendiente revisión manual)
+        cotizacion.setEstado(excedeStockMinimo
+                ? EstadoCotizacion.enviada
+                : EstadoCotizacion.aceptada);
+
         cotizacion.setSubtotal(subtotal);
         cotizacion.setIgv(igv);
         cotizacion.setTotal(total);
@@ -97,6 +109,40 @@ public class CotizacionService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<CotizacionResponse> listarTodas() {
+        return cotizacionRepository.findAllByOrderByFechaEmisionDesc()
+                .stream()
+                .map(this::mapearAResponse)
+                .toList();
+    }
+
+    @Transactional
+    public CotizacionResponse aceptarCotizacion(Integer id) {
+        Cotizacion cotizacion = cotizacionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cotizacion", id.toString()));
+
+        if (cotizacion.getEstado() != EstadoCotizacion.enviada) {
+            throw new IllegalStateException("Solo se pueden aceptar cotizaciones en estado enviada");
+        }
+
+        cotizacion.setEstado(EstadoCotizacion.aceptada);
+        return mapearAResponse(cotizacionRepository.save(cotizacion));
+    }
+
+    @Transactional
+    public CotizacionResponse rechazarCotizacion(Integer id) {
+        Cotizacion cotizacion = cotizacionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cotizacion", id.toString()));
+
+        if (cotizacion.getEstado() != EstadoCotizacion.enviada) {
+            throw new IllegalStateException("Solo se pueden rechazar cotizaciones en estado enviada");
+        }
+
+        cotizacion.setEstado(EstadoCotizacion.rechazada);
+        return mapearAResponse(cotizacionRepository.save(cotizacion));
+    }
+
     private CotizacionResponse mapearAResponse(Cotizacion c) {
         List<CotizacionDetalleResponse> detallesResponse = c.getDetalles().stream()
                 .map(d -> new CotizacionDetalleResponse(
@@ -109,6 +155,10 @@ public class CotizacionService {
                         d.getSubtotal()
                 )).toList();
 
+        String nombreCliente = c.getCliente().getRazonSocial() != null
+                ? c.getCliente().getRazonSocial()
+                : c.getCliente().getNombre() + " " + (c.getCliente().getApellido() != null ? c.getCliente().getApellido() : "");
+
         return new CotizacionResponse(
                 c.getId(),
                 c.getFechaEmision(),
@@ -118,6 +168,7 @@ public class CotizacionService {
                 c.getSubtotal(),
                 c.getIgv(),
                 c.getTotal(),
+                nombreCliente.trim(),
                 detallesResponse
         );
     }

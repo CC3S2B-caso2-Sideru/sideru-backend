@@ -133,11 +133,11 @@ WHERE codigo IN (
 --  USUARIOS INTERNOS
 
 INSERT INTO usuario (rol_id, tipo, username, email, password_hash) VALUES
-                                                                       (1, 'INTERNO', 'admin.torres',    'admin@siderurgicaperu.com',     '$2b$12$HASH_ADMIN_001'),
+                                                                       (1, 'INTERNO', 'admin',    'admin@siderurgicaperu.com',     '$2a$10$R2Svc.PJ15/GYbLHXr74We4/uT4Oo.FRyXw21Ey/yVaopWKiBW2nW'), -- pwd: admin
                                                                        (2, 'INTERNO', 'gerente.vargas',  'gerente@siderurgicaperu.com',   '$2b$12$HASH_GERE_001'),
-                                                                       (3, 'INTERNO', 'vendedor.luna',   'vluna@siderurgicaperu.com',     '$2b$12$HASH_VEND_001'),
+                                                                       (3, 'INTERNO', 'vendedor.luna',   'vluna@siderurgicaperu.com',     '$2a$10$15YlWTm1vAAMLsGtQj45xuFngVtd2AozwCl3qjudzT6jjoBT/33FW'), -- pwd: luna
                                                                        (3, 'INTERNO', 'vendedor.rios',   'vrios@siderurgicaperu.com',     '$2b$12$HASH_VEND_002'),
-                                                                       (4, 'INTERNO', 'almacen.huanca',  'ahuanca@siderurgicaperu.com',   '$2b$12$HASH_ALMA_001'),
+                                                                       (4, 'INTERNO', 'almacen.huanca',  'ahuanca@siderurgicaperu.com',   '$2a$10$xA8ssFOmy267L2P/5eHzeeuxlGC2L0RKvE2dRLyvCgcMQYk5go8r6'), -- pwd: huanca
                                                                        (5, 'INTERNO', 'rrhh.mendoza',    'rmendoza@siderurgicaperu.com',  '$2b$12$HASH_RRHH_001');
 
 -- USUARIOS CLIENTES (portal)

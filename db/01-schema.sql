@@ -171,7 +171,8 @@ CREATE TABLE pedido
     updated_at     TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
 
     FOREIGN KEY (cotizacion_id) REFERENCES cotizacion (id),
-    FOREIGN KEY (cliente_id) REFERENCES cliente (id)
+    FOREIGN KEY (cliente_id) REFERENCES cliente (id),
+    UNIQUE (cotizacion_id)
 );
 
 

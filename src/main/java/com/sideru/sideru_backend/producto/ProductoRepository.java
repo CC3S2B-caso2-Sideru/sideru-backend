@@ -25,8 +25,11 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
                     OR LOWER(p.sku) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%'))
                     OR LOWER(c.nombre) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%'))
                 )
-            ) ORDER BY (p.nombre) LIMIT :limit OFFSET :offset
+            ) AND p.activo = true ORDER BY (p.nombre) LIMIT :limit OFFSET :offset
             """)
     List<Producto> findByFilters(Integer categoriaId, String search,  Long limit, Long offset);
+
+    @Query("SELECT p FROM Producto p WHERE p.stock <= p.stockMinimo AND p.activo = true")
+    List<Producto> findStockBajo();
 
 }

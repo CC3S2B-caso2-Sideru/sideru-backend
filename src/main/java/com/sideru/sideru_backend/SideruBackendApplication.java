@@ -12,9 +12,6 @@ public class SideruBackendApplication {
 	private static final PasswordEncoder passwordEncoder =  new BCryptPasswordEncoder();
 	public static void main(String[] args) {
 		SpringApplication.run(SideruBackendApplication.class, args);
-		System.out.println(passwordEncoder.encode("admin"));
-		System.out.println(passwordEncoder.encode("luna"));
-		System.out.println(passwordEncoder.encode("huanca"));
 	}
 
 }

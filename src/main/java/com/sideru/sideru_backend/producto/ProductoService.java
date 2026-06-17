@@ -51,4 +51,8 @@ public class ProductoService {
                 .map(productoMapper::toProductoResponse)
                 .toList();
     }
+
+    public List<Producto> findStockBajoProducts() {
+        return productoRepository.findStockBajo();
+    }
 }

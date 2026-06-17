@@ -425,3 +425,103 @@ VALUES
     (1, 8, 22, 0, 0, 0.00, 1800.00,   0.00,   0.00,   0.00,   0.00, 1800.00, TRUE,  '2025-04-05'),
     -- Silvana Campos: 2 tardanzas
     (1, 9, 20, 0, 2, 0.00, 1900.00,   0.00,  57.58,   0.00,   0.00, 1842.42, FALSE, '2025-04-05');
+-- ============================================================
+-- DATOS DE PRUEBA PARA REPORTES — Cotizaciones variadas (Ene–Jun 2026)
+-- ============================================================
+
+-- Enero 2026
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (1, '2026-01-15 08:30:00-05', '2026-01-22', 'aceptada', 5000.00, 0, 900.00, 5900.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 1, 100, 50.00, 0, 5000.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (2, '2026-01-20 10:00:00-05', '2026-01-27', 'rechazada', 3000.00, 0, 540.00, 3540.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 2, 50, 60.00, 0, 3000.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (3, '2026-01-25 14:00:00-05', '2026-02-01', 'aceptada', 8000.00, 400.00, 1368.00, 8968.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 3, 100, 80.00, 5, 7600.00), (currval('cotizacion_id_seq'), 4, 10, 40.00, 0, 400.00);
+
+-- Febrero 2026
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (4, '2026-02-05 09:00:00-05', '2026-02-12', 'aceptada', 6500.00, 0, 1170.00, 7670.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 5, 50, 130.00, 0, 6500.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (5, '2026-02-12 11:00:00-05', '2026-02-19', 'rechazada', 4200.00, 0, 756.00, 4956.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 6, 20, 210.00, 0, 4200.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (1, '2026-02-22 16:00:00-05', '2026-03-01', 'enviada', 2000.00, 0, 360.00, 2360.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 7, 40, 50.00, 0, 2000.00);
+
+-- Marzo 2026
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (2, '2026-03-01 08:00:00-05', '2026-03-08', 'aceptada', 10000.00, 500.00, 1710.00, 11210.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 8, 50, 200.00, 5, 9500.00), (currval('cotizacion_id_seq'), 9, 5, 100.00, 0, 500.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (3, '2026-03-10 13:00:00-05', '2026-03-17', 'enviada', 3500.00, 0, 630.00, 4130.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 10, 70, 50.00, 0, 3500.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (4, '2026-03-18 10:30:00-05', '2026-03-25', 'rechazada', 7000.00, 0, 1260.00, 8260.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 11, 100, 70.00, 0, 7000.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (5, '2026-03-25 15:00:00-05', '2026-04-01', 'aceptada', 4500.00, 0, 810.00, 5310.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 12, 30, 150.00, 0, 4500.00);
+
+-- Abril 2026
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (1, '2026-04-05 09:00:00-05', '2026-04-12', 'aceptada', 5500.00, 0, 990.00, 6490.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 1, 100, 55.00, 0, 5500.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (2, '2026-04-12 11:00:00-05', '2026-04-19', 'rechazada', 9000.00, 450.00, 1539.00, 10089.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 2, 150, 60.00, 5, 8550.00), (currval('cotizacion_id_seq'), 3, 10, 45.00, 0, 450.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (3, '2026-04-20 14:00:00-05', '2026-04-27', 'enviada', 1500.00, 0, 270.00, 1770.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 4, 30, 50.00, 0, 1500.00);
+
+-- Mayo 2026
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (4, '2026-05-02 08:30:00-05', '2026-05-09', 'aceptada', 7500.00, 0, 1350.00, 8850.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 5, 50, 150.00, 0, 7500.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (5, '2026-05-10 10:00:00-05', '2026-05-17', 'enviada', 3200.00, 0, 576.00, 3776.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 6, 20, 160.00, 0, 3200.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (1, '2026-05-18 13:00:00-05', '2026-05-25', 'rechazada', 11000.00, 0, 1980.00, 12980.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 7, 100, 110.00, 0, 11000.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (2, '2026-05-25 16:00:00-05', '2026-06-01', 'aceptada', 6000.00, 300.00, 1026.00, 6726.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 8, 60, 100.00, 5, 5700.00), (currval('cotizacion_id_seq'), 9, 5, 60.00, 0, 300.00);
+
+-- Junio 2026
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (3, '2026-06-01 09:00:00-05', '2026-06-08', 'aceptada', 4000.00, 0, 720.00, 4720.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 10, 80, 50.00, 0, 4000.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (4, '2026-06-08 10:30:00-05', '2026-06-15', 'enviada', 5000.00, 0, 900.00, 5900.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 11, 50, 100.00, 0, 5000.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (5, '2026-06-12 14:00:00-05', '2026-06-19', 'aceptada', 8500.00, 425.00, 1453.50, 9528.50);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 12, 50, 170.00, 5, 8075.00), (currval('cotizacion_id_seq'), 1, 10, 42.50, 0, 425.00);
+INSERT INTO cotizacion (cliente_id, fecha_emision, fecha_expiracion, estado, subtotal, descuento_total, igv, total) VALUES
+    (1, '2026-06-16 08:00:00-05', '2026-06-23', 'rechazada', 2500.00, 0, 450.00, 2950.00);
+INSERT INTO cotizacion_detalle (cotizacion_id, producto_id, cantidad, precio_unitario, descuento, subtotal) VALUES
+    (currval('cotizacion_id_seq'), 2, 50, 50.00, 0, 2500.00);
+

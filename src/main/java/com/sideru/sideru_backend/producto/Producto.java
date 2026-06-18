@@ -41,6 +41,15 @@ public class Producto {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
+<<<<<<< HEAD
+=======
+    /**
+     * Umbral de auto-aprobación para cotizaciones.
+     * Si un cliente solicita una cantidad menor o igual a este valor,
+     * la cotización se auto-acepta. Si excede, queda pendiente de revisión.
+     * Se expone al cliente en el catálogo como "stock" para ocultar el stock real.
+     */
+>>>>>>> ccf3d5da26ddc823de61935b46cb22af71946569
     @Column(name = "stock_minimo")
     private Integer stockMinimo;
 

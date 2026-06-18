@@ -52,7 +52,11 @@ public class CotizacionService {
             Producto producto = productoRepository.findBySku(itemReq.sku())
                     .orElseThrow(() -> new ResourceNotFoundException("Producto", itemReq.sku()));
 
-            // Verificar si la cantidad excede el stockMinimo del producto
+            // Auto-aceptación por umbral (stockMinimo):
+            // Si cantidad ≤ stockMinimo → se acepta automáticamente.
+            // Si cantidad > stockMinimo o stockMinimo == null → requiere revisión manual.
+            // stockMinimo actúa como "umbral de confianza": lo máximo que un cliente
+            // puede pedir sin que un vendedor/gerente tenga que revisar la cotización.
             Integer minimo = producto.getStockMinimo();
             if (minimo == null || itemReq.cantidad() > minimo) {
                 excedeStockMinimo = true;
@@ -81,8 +85,8 @@ public class CotizacionService {
         BigDecimal igv = subtotal.multiply(BigDecimal.valueOf(0.18)).setScale(2, RoundingMode.HALF_UP);
         BigDecimal total = subtotal.add(igv);
 
-        // Si ningún item excede stockMinimo → aceptada automáticamente
-        // Si algún item excede → enviada (pendiente revisión manual)
+        // Si ningún item excede el umbral de auto-aprobación → aceptada automáticamente.
+        // Si algún item lo excede → enviada (pendiente de revisión manual por vendedor/gerente).
         cotizacion.setEstado(excedeStockMinimo
                 ? EstadoCotizacion.enviada
                 : EstadoCotizacion.aceptada);

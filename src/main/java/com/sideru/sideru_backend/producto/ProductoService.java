@@ -1,9 +1,5 @@
 package com.sideru.sideru_backend.producto;
 
-<<<<<<< HEAD
-import com.sideru.sideru_backend.producto.dto.ProductoResponse;
-import org.springframework.stereotype.Service;
-=======
 import com.sideru.sideru_backend.categoria.Categoria;
 import com.sideru.sideru_backend.categoria.CategoriaRepository;
 import com.sideru.sideru_backend.exception.ResourceNotFoundException;
@@ -14,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
->>>>>>> ccf3d5da26ddc823de61935b46cb22af71946569
 
 import java.util.List;
 
@@ -22,15 +17,6 @@ import java.util.List;
 public class ProductoService {
     private ProductoRepository productoRepository;
     private ProductoMapper productoMapper;
-<<<<<<< HEAD
-
-    public ProductoService(
-            ProductoRepository productoRepository,
-            ProductoMapper productoMapper
-    ) {
-        this.productoRepository = productoRepository;
-        this.productoMapper = productoMapper;
-=======
     private CategoriaRepository categoriaRepository;
 
     public ProductoService(
@@ -41,7 +27,6 @@ public class ProductoService {
         this.productoRepository = productoRepository;
         this.productoMapper = productoMapper;
         this.categoriaRepository = categoriaRepository;
->>>>>>> ccf3d5da26ddc823de61935b46cb22af71946569
     }
 
     public List<ProductoResponse> findAll() {
@@ -77,8 +62,6 @@ public class ProductoService {
                 .map(productoMapper::toProductoResponse)
                 .toList();
     }
-<<<<<<< HEAD
-=======
 
     @Transactional(readOnly = true)
     public Page<ProductoAdminResponse> findAllAdmin(
@@ -177,5 +160,4 @@ public class ProductoService {
                 .map(productoMapper::toAdminResponse)
                 .toList();
     }
->>>>>>> ccf3d5da26ddc823de61935b46cb22af71946569
 }

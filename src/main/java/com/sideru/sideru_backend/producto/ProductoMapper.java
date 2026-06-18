@@ -1,9 +1,6 @@
 package com.sideru.sideru_backend.producto;
 
-<<<<<<< HEAD
-=======
 import com.sideru.sideru_backend.producto.dto.ProductoAdminResponse;
->>>>>>> ccf3d5da26ddc823de61935b46cb22af71946569
 import com.sideru.sideru_backend.producto.dto.ProductoResponse;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +15,6 @@ public class ProductoMapper {
                 producto.getStockMinimo()
         );
     }
-<<<<<<< HEAD
-=======
 
     public ProductoAdminResponse toAdminResponse(Producto producto) {
         return new ProductoAdminResponse(
@@ -35,5 +30,4 @@ public class ProductoMapper {
             producto.getCategoria().getNombre()
         );
     }
->>>>>>> ccf3d5da26ddc823de61935b46cb22af71946569
 }

@@ -1,10 +1,7 @@
 package com.sideru.sideru_backend.producto;
 
-<<<<<<< HEAD
-=======
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
->>>>>>> ccf3d5da26ddc823de61935b46cb22af71946569
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,12 +27,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
                     OR LOWER(p.sku) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%'))
                     OR LOWER(c.nombre) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%'))
                 )
-<<<<<<< HEAD
-            ) ORDER BY (p.nombre) LIMIT :limit OFFSET :offset
-            """)
-    List<Producto> findByFilters(Integer categoriaId, String search,  Long limit, Long offset);
-
-=======
             ) AND p.activo = true ORDER BY (p.nombre) LIMIT :limit OFFSET :offset
             """)
     List<Producto> findByFilters(Integer categoriaId, String search,  Long limit, Long offset);
@@ -70,5 +61,4 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     @Query("SELECT p FROM Producto p WHERE p.stock <= p.stockMinimo AND p.activo = true")
     List<Producto> findStockBajo();
 
->>>>>>> ccf3d5da26ddc823de61935b46cb22af71946569
 }

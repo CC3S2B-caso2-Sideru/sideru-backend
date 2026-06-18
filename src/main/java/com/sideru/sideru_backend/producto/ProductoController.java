@@ -62,4 +62,19 @@ public class ProductoController {
 //        }
         return productoService.findByFilters(categoriaId, search, page, pageSize);
     }
+
+    @GetMapping("/stock-bajo")
+    @PreAuthorize("hasAuthority('reporte.ver')")
+    @Operation(summary = "Productos con stock bajo o crítico")
+    public List<Map<String, Object>> stockBajo() {
+        return productoService.findStockBajo()
+                .stream()
+                .<Map<String, Object>>map(p -> Map.of(
+                        "sku", (Object) p.sku(),
+                        "nombre", (Object) p.nombre(),
+                        "stock", (Object) p.stock(),
+                        "stockMinimo", (Object) (p.stockMinimo() != null ? p.stockMinimo() : 0)
+                ))
+                .toList();
+    }
 }

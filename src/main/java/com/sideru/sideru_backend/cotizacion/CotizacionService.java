@@ -8,6 +8,7 @@ import com.sideru.sideru_backend.cotizacion.entity.CotizacionDetalle;
 import com.sideru.sideru_backend.cotizacion.entity.EstadoCotizacion;
 import com.sideru.sideru_backend.cotizacion.CotizacionRepository;
 import com.sideru.sideru_backend.exception.ResourceNotFoundException;
+import com.sideru.sideru_backend.pedido.PedidoService;
 import com.sideru.sideru_backend.producto.Producto;
 import com.sideru.sideru_backend.producto.ProductoRepository;
 import com.sideru.sideru_backend.usuario.entity.Usuario;
@@ -28,6 +29,7 @@ public class CotizacionService {
     private final CotizacionRepository cotizacionRepository;
     private final ClienteRepository clienteRepository;
     private final ProductoRepository productoRepository;
+    private final PedidoService pedidoService;
 
     @Transactional
     public CotizacionResponse crearCotizacion(CotizacionRequest request, Usuario usuario) {
@@ -98,6 +100,9 @@ public class CotizacionService {
 
         // Guardar en Base de Datos
         Cotizacion guardada = cotizacionRepository.save(cotizacion);
+        if (guardada.getEstado() == EstadoCotizacion.aceptada) {
+            pedidoService.crearDesdeCotizacion(guardada.getId());
+        }
 
         return mapearAResponse(guardada);
     }
@@ -131,7 +136,9 @@ public class CotizacionService {
         }
 
         cotizacion.setEstado(EstadoCotizacion.aceptada);
-        return mapearAResponse(cotizacionRepository.save(cotizacion));
+        Cotizacion guardada = cotizacionRepository.save(cotizacion);
+        pedidoService.crearDesdeCotizacion(guardada.getId());
+        return mapearAResponse(guardada);
     }
 
     @Transactional

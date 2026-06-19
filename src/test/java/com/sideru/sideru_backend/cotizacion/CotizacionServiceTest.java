@@ -6,6 +6,8 @@ import com.sideru.sideru_backend.cotizacion.dto.*;
 import com.sideru.sideru_backend.cotizacion.entity.Cotizacion;
 import com.sideru.sideru_backend.cotizacion.entity.EstadoCotizacion;
 import com.sideru.sideru_backend.exception.ResourceNotFoundException;
+import com.sideru.sideru_backend.pedido.PedidoRepository;
+import com.sideru.sideru_backend.pedido.entity.Pedido;
 import com.sideru.sideru_backend.producto.Producto;
 import com.sideru.sideru_backend.producto.ProductoRepository;
 import com.sideru.sideru_backend.usuario.entity.Usuario;
@@ -50,6 +52,9 @@ public class CotizacionServiceTest {
 
     @Autowired
     private CotizacionService cotizacionService;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
     // Entidades reales guardadas en H2 para las pruebas
     private Usuario mockUsuario;
@@ -135,6 +140,10 @@ public class CotizacionServiceTest {
         Cotizacion savedCotizacion = savedCotizacionOpt.get();
         assertEquals(EstadoCotizacion.aceptada, savedCotizacion.getEstado());
         assertEquals(0, savedCotizacion.getTotal().compareTo(BigDecimal.valueOf(177.00)));
+
+        Optional<Pedido> savedPedidoOpt = pedidoRepository.findByCotizacionId(response.id());
+        assertTrue(savedPedidoOpt.isPresent());
+        assertEquals("pendiente", savedPedidoOpt.get().getEstado().name());
     }
 
     /**
@@ -159,6 +168,24 @@ public class CotizacionServiceTest {
         Optional<Cotizacion> savedCotizacionOpt = cotizacionRepository.findById(response.id());
         assertTrue(savedCotizacionOpt.isPresent());
         assertEquals(EstadoCotizacion.enviada, savedCotizacionOpt.get().getEstado());
+        assertFalse(pedidoRepository.existsByCotizacionId(response.id()));
+    }
+
+    /**
+     * Prueba: al aceptar manualmente una cotizaciÃ³n enviada, se genera su pedido pendiente.
+     */
+    @Test
+    void aceptarCotizacion_GeneraPedidoPendiente() {
+        CotizacionItemRequest item = new CotizacionItemRequest("PROD01", 25);
+        CotizacionRequest request = new CotizacionRequest("Prueba aceptacion manual", List.of(item));
+        CotizacionResponse enviada = cotizacionService.crearCotizacion(request, mockUsuario);
+
+        CotizacionResponse aceptada = cotizacionService.aceptarCotizacion(enviada.id());
+
+        assertEquals("aceptada", aceptada.estado().toLowerCase());
+        Optional<Pedido> savedPedidoOpt = pedidoRepository.findByCotizacionId(aceptada.id());
+        assertTrue(savedPedidoOpt.isPresent());
+        assertEquals("pendiente", savedPedidoOpt.get().getEstado().name());
     }
 
     /**
